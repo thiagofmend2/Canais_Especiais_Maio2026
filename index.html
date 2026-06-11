@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Canais Especiais - Maio 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' );
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { min-height: 350px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
+    <header class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <h1 class="text-4xl font-bold text-slate-900">CANAIS ESPECIAIS - MAIO/2026</h1>
+            <p class="text-slate-500 mt-2">Visão Gerencial</p>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600">
+                <div class="flex items-center justify-between">
+                    <div><p class="text-slate-600 text-sm font-medium uppercase">Total de Atendimentos</p><p class="text-3xl font-bold text-slate-900 mt-2">134</p></div>
+                    <div class="bg-blue-100 p-4 rounded-full"><i data-lucide="bar-chart-3" class="w-8 h-8 text-blue-600"></i></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-400">
+                <div class="flex items-center justify-between">
+                    <div><p class="text-slate-600 text-sm font-medium uppercase">Base de Ativos</p><p class="text-3xl font-bold text-slate-900 mt-2">162.397</p></div>
+                    <div class="bg-blue-100 p-4 rounded-full"><i data-lucide="users" class="w-8 h-8 text-blue-400"></i></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+                <div class="flex items-center justify-between">
+                    <div><p class="text-slate-600 text-sm font-medium uppercase">Atendimentos / Base</p><p class="text-3xl font-bold text-slate-900 mt-2">0,08%</p></div>
+                    <div class="bg-yellow-100 p-4 rounded-full"><i data-lucide="trending-up" class="w-8 h-8 text-yellow-600"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8 relative">
+            <h2 class="text-lg font-bold text-slate-900 mb-6 uppercase">Evolução Comparativa de Atendimentos Consolidados</h2>
+            <div id="evolutionChart" class="chart-container"></div>
+            <div class="absolute bottom-10 right-10 flex flex-col items-end text-[10px] font-bold pr-2 pb-2">
+                <span class="text-yellow-600">% da Base</span>
+                <span class="text-blue-500">Base de Ativos</span>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden h-full">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4"><h2 class="text-white font-bold text-lg uppercase">Canais Especiais por IE - Maio</h2></div>
+                    <div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50 border-b border-slate-200"><tr><th class="px-6 py-3 text-left text-sm font-semibold text-slate-700">IE</th><th class="px-6 py-3 text-right text-sm font-semibold text-slate-700">CASOS</th></tr></thead><tbody id="ieTableBody"></tbody></table></div>
+                </div>
+            </div>
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow-md p-6 h-full">
+                    <h2 class="text-lg font-bold text-slate-900 mb-6 uppercase">Distribuição de Atendimentos por Segmento</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="relative"><div id="segmentoChart"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-2 text-center pointer-events-none"><span class="block text-4xl font-bold text-slate-900">134</span><span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Atendimentos</span></div></div>
+                        <div class="space-y-4" id="segmentoLegend"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8"><h2 class="text-lg font-bold text-slate-900 mb-6 uppercase">Evolução de Atendimentos por IE</h2><div id="ieEvolutionChart" class="chart-container"></div></div>
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8"><h2 class="text-lg font-bold text-slate-900 mb-6 uppercase">Análise Executiva</h2><div class="space-y-4" id="executiveAnalysis"></div></section>
+        <section class="space-y-6 mb-8" id="ieCards"></section>
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8"><h2 class="text-lg font-bold text-slate-900 mb-6 uppercase">Maiores Concentradores de Demanda</h2><div class="overflow-x-auto"><table class="w-full"><thead><tr class="bg-blue-600 text-white"><th class="px-4 py-3 text-left text-sm font-semibold">Rank</th><th class="px-4 py-3 text-left text-sm font-semibold">Motivo de Contato</th><th class="px-4 py-3 text-left text-sm font-semibold">Classificação de Assuntos</th></tr></thead><tbody id="motivosTableBody"></tbody></table></div></section>
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8"><h2 class="text-lg font-bold text-slate-900 mb-6 uppercase">Top 5 - Origens das Motivações</h2><div class="overflow-x-auto"><table class="w-full"><thead><tr class="bg-blue-600 text-white"><th class="px-4 py-3 text-left text-sm font-semibold">Rank</th><th class="px-4 py-3 text-left text-sm font-semibold">Origem</th><th class="px-4 py-3 text-left text-sm font-semibold">Classificação de Assuntos</th></tr></thead><tbody id="origensTableBody"></tbody></table></div></section>
+    </main>
+    <script>
+        const ieData = [{name:"PUCRS",value:80},{name:"FAAP",value:17},{name:"FIA",value:18},{name:"IMPACTA",value:8},{name:"FSL",value:5},{name:"UNINASSAU",value:4},{name:"UNESC",value:2}];
+        const segmentoData = [{name:"RA",value:79,color:"#1e3a8a"},{name:"PROCON",value:28,color:"#fbbf24"},{name:"Ouvidoria",value:27,color:"#60a5fa"}];
+        const historicoMensal = [{mes:"jan/26",total:166,base:134964,percentual:0.12},{mes:"fev/26",total:182,base:144244,percentual:0.13},{mes:"mar/26",total:170,base:151440,percentual:0.11},{mes:"abr/26",total:146,base:156615,percentual:0.09},{mes:"mai/26",total:134,base:162397,percentual:0.08}];
+        const historicoIE = [{mes:"jan/26",data:[121,20,14,3,3,0,5]},{mes:"fev/26",data:[136,12,15,7,4,3,5]},{mes:"mar/26",data:[102,24,23,10,6,1,4]},{mes:"abr/26",data:[95,18,9,4,9,0,11]},{mes:"mai/26",data:[80,17,18,8,4,2,5]}];
+        const ieCardsData = [{name:"PUCRS",logo:"https://bucket-vitrine-wl-prod.edtech.com.br/assets-headless/Logo_Icon_0bd832db2a_4f8bfdd079.svg",motivations:"Cobrança e negociação, Acesso e plataforma",stats:{ra:54,ouv:7,pro:19},insight:"Concentração em pontos críticos financeiros"},{name:"FAAP",logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp6eFbWK4LH6au52iHgm_VpLwDTjZKLz0Sg&s",motivations:"Conteúdo das aulas, Plataforma, Retorno de avaliações, Solicitação de certificado",stats:{ra:7,ouv:6,pro:4,pes:6},insight:"Equilíbrio entre demandas acadêmicas e operacionais"},{name:"FIA",logo:"https://www.fiaonline.com.br/hs-fs/hubfs/FIA-Online---Logo-(Branco )-1-1.webp",motivations:"Nome negativado, Cancelamento",stats:{ra:7,ouv:10,pro:1},insight:"Alta concentração em temas financeiros críticos"},{name:"IMPACTA",logo:"https://digital.impacta.com.br/hs-fs/hubfs/FACULDADE-LOGO-DIGITAL-NORMAL.png",motivations:"Cancelamento, Certificação - Solicitação, Certificação - Andamento, Documentação e Treinamento",stats:{ra:5,ouv:3},insight:"Concentração em momentos finais da jornada"},{name:"UNESC",logo:"https://bucket-vitrine-wl-prod.edtech.com.br/assets-headless/logo_49f3ba3e59_1_1_1_5cace08c25.webp",motivations:"Cancelamento, Cobrança indevida",stats:{ra:1,ouv:1},insight:"Volume residual (2 casos ), mas associados a experiência negativa e risco de evasão"},{name:"FSL",logo:"https://digital.faculdadesiriolibanes.org.br/hs-fs/hubfs/logo-sirio-libanes-negativo.png",motivations:"Documentação/Matrícula, Cobrança com juros, Pendências documentais, Falhas no atendimento",stats:{ra:4,ouv:0,pro:1},insight:"Volume reduzido, sem concentração relevante"},{name:"UNINASSAU",logo:"https://vest.uninassau.edu.br/logos/uninassau/dark.svg",motivations:"Cobrança e negociação, Negação indevida",stats:{ra:1,ouv:0,pro:3},insight:"Forte concentração em problemas financeiros críticos"}];
+        const ieTable = document.getElementById('ieTableBody' );
+        ieData.forEach(item => { ieTable.innerHTML += `<tr class="border-b border-slate-100 hover:bg-slate-50"><td class="px-6 py-3 text-sm text-slate-900">${item.name}</td><td class="px-6 py-3 text-sm text-slate-900 text-right font-medium">${item.value}</td></tr>`; });
+        ieTable.innerHTML += `<tr class="bg-blue-50 border-t-2 border-blue-200"><td class="px-6 py-3 text-sm font-bold text-slate-900">CONSOLIDADO</td><td class="px-6 py-3 text-sm font-bold text-slate-900 text-right">134</td></tr>`;
+        const segmentoLegend = document.getElementById('segmentoLegend');
+        segmentoData.forEach(item => { segmentoLegend.innerHTML += `<div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100"><div class="flex items-center gap-3"><div class="w-4 h-4 rounded-full shadow-sm" style="background-color: ${item.color}"></div><span class="text-sm font-bold text-slate-700">${item.name}</span></div><div class="flex items-center gap-4"><span class="text-lg font-black text-slate-900">${item.value}</span><span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-md border border-blue-100">${((item.value/134)*100).toFixed(1)}%</span></div></div>`; });
+        const evolutionOptions = { series: [{ name: 'Atendimentos', type: 'column', data: historicoMensal.map(d => d.total) }, { name: '% da Base', type: 'line', data: historicoMensal.map(d => d.percentual) }, { name: 'Base de Ativos', type: 'line', data: historicoMensal.map(d => d.base) }], chart: { height: 350, type: 'line', stacked: false, toolbar: { show: false } }, stroke: { width: [0, 4, 2], curve: 'smooth', dashArray: [0, 0, 5] }, colors: ['#1e3a8a', '#fbbf24', '#60a5fa'], xaxis: { categories: historicoMensal.map(d => d.mes) }, yaxis: [{ title: { text: 'Atendimentos' } }, { opposite: true, labels: { formatter: (v) => v.toFixed(2) + '%' } }, { opposite: true, labels: { formatter: (v) => (v/1000).toFixed(0) + 'k' }, min: 125000, max: 175000 }], tooltip: { shared: true, intersect: false, y: { formatter: function (y, { seriesIndex }) { if(seriesIndex === 1) return y.toFixed(2) + '%'; if(seriesIndex === 2) return y.toLocaleString(); return y; } } }, legend: { position: 'bottom' } };
+        new ApexCharts(document.querySelector("#evolutionChart"), evolutionOptions).render();
+        const segmentoOptions = { series: segmentoData.map(d => d.value), chart: { type: 'donut', height: 300 }, labels: segmentoData.map(d => d.name), colors: segmentoData.map(d => d.color), plotOptions: { pie: { donut: { size: '75%' } } }, legend: { show: false }, dataLabels: { enabled: false } };
+        new ApexCharts(document.querySelector("#segmentoChart"), segmentoOptions).render();
+        const ieEvolutionOptions = { series: [{ name: 'PUCRS', data: historicoIE.map(h => h.data[0]) }, { name: 'FAAP', data: historicoIE.map(h => h.data[1]) }, { name: 'FIA', data: historicoIE.map(h => h.data[2]) }, { name: 'IMPACTA', data: historicoIE.map(h => h.data[3]) }, { name: 'UNINASSAU', data: historicoIE.map(h => h.data[4]) }, { name: 'UNESC', data: historicoIE.map(h => h.data[5]) }, { name: 'FSL', data: historicoIE.map(h => h.data[6]) }], chart: { type: 'bar', height: 350, toolbar: { show: false } }, plotOptions: { bar: { horizontal: false, columnWidth: '55%', borderRadius: 4, dataLabels: { position: 'top' } } }, dataLabels: { enabled: true, offsetY: -20, style: { fontSize: '10px', colors: ["#304758"] } }, xaxis: { categories: historicoIE.map(h => h.mes) }, colors: ['#1e3a8a', '#fbbf24', '#60a5fa', '#10b981', '#ef4444', '#f97316', '#8b5cf6'], legend: { position: 'bottom' } };
+        new ApexCharts(document.querySelector("#ieEvolutionChart"), ieEvolutionOptions).render();
+        const analysis = [{ icon: 'trending-down', color: 'red', title: 'Redução do volume de atendimentos', text: 'O volume total de atendimentos apresentou redução em maio/26, totalizando 134 atendimentos, após registrar 146 atendimentos em abril/26.' }, { icon: 'check-circle', color: 'blue', title: 'Taxa de atendimentos / base controlada', text: 'A taxa de atendimentos frente à base de alunos encerrou maio em 0,08%, permanecendo dentro do histórico observado.' }, { icon: 'alert-circle', color: 'yellow', title: 'Alta concentração no canal PUCRS ONLINE', text: 'O canal PUCRS ONLINE representou 59,7% de todos os atendimentos do mês.' }, { icon: 'target', color: 'purple', title: 'Canais Especiais com baixo volume', text: 'Os registros de RA/Ouvidoria/PROCON totalizaram apenas 134 atendimentos.' }];
+        const analysisDiv = document.getElementById('executiveAnalysis');
+        analysis.forEach(item => { analysisDiv.innerHTML += `<div class="flex gap-4 p-4 bg-${item.color}-50 rounded-lg border-l-4 border-${item.color}-500"><div class="flex-shrink-0"><i data-lucide="${item.icon}" class="w-6 h-6 text-${item.color}-600 mt-1"></i></div><div><p class="font-semibold text-slate-900">${item.title}</p><p class="text-sm text-slate-700 mt-1">${item.text}</p></div></div>`; });
+        const cardsDiv = document.getElementById('ieCards');
+        ieCardsData.forEach(ie => { cardsDiv.innerHTML += `<div class="bg-white rounded-lg shadow-md p-6"><div class="grid grid-cols-1 md:grid-cols-4 gap-6"><div class="flex items-start justify-center md:justify-start"><div class="bg-black p-4 rounded-lg w-[150px] h-[150px] flex items-center justify-center border border-slate-700"><img src="${ie.logo}" alt="${ie.name}" class="w-full h-full object-contain"></div></div><div class="md:col-span-3 space-y-4"><h3 class="font-bold text-slate-900 text-lg">${ie.name}</h3><div><p class="text-xs font-semibold text-slate-600 mb-1">PRINCIPAIS MOTIVAÇÕES</p><p class="text-sm text-slate-700 leading-relaxed">${ie.motivations}</p></div><div class="p-3 bg-blue-50 rounded border-l-4 border-blue-600"><p class="text-xs text-slate-700 italic">${ie.insight}</p></div><div class="flex gap-8"><div><p class="text-xs text-slate-600 font-semibold">RA</p><p class="text-lg font-bold text-slate-900">${ie.stats.ra}</p></div><div><p class="text-xs text-slate-600 font-semibold">Ouvidoria</p><p class="text-lg font-bold text-slate-900">${ie.stats.ouv}</p></div>${ie.stats.pro?`<div><p class="text-xs text-slate-600 font-semibold">PROCON</p><p class="text-lg font-bold text-slate-900">${ie.stats.pro}</p></div>`:''}${ie.stats.pes?`<div><p class="text-xs text-slate-600 font-semibold">Pesquisa</p><p class="text-lg font-bold text-slate-900">${ie.stats.pes}</p></div>`:''}</div></div></div></div>`; });
+        const motivos = [["Falha de acesso / plataforma", "Instabilidade de plataforma; Erro de login"],["Cobrança indevida após cancelamento", "Cobrança após cancelamento; Falha no processo de baixa"],["Cobrança de taxa de reingresso/prorrogação", "Taxas acadêmicas; Reingresso"],["Negativação indevida / nome negativado", "Inclusão indevida em órgãos de proteção"],["Cobrança indevida / duplicidade de cobrança", "Duplicidade de lançamento; Valores incorretos"]];
+        const motivosTable = document.getElementById('motivosTableBody');
+        motivos.forEach((m, i) => { motivosTable.innerHTML += `<tr class="border-b border-slate-200 ${i%2===0?'bg-slate-50':'bg-white'}"><td class="px-4 py-4"><div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm">${i+1}</div></td><td class="px-4 py-4 text-sm font-medium text-slate-900">${m[0]}</td><td class="px-4 py-4 text-sm text-slate-700">${m[1]}</td></tr>`; });
+        const origens = [["Cobrança", "Negociação de valores; Cobrança indevida"],["Retenção", "Cancelamento; Dificuldade de permanência"],["Atendimento", "Demora no retorno; Falta de suporte"],["Tecnologia (TI)", "Falhas de plataforma; Problemas de acesso"],["Secretaria", "Documentos; Certificados; Prazos acadêmicos"]];
+        const origensTable = document.getElementById('origensTableBody');
+        origens.forEach((o, i) => { origensTable.innerHTML += `<tr class="border-b border-slate-200 ${i%2===0?'bg-slate-50':'bg-white'}"><td class="px-4 py-4"><div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm">${i+1}</div></td><td class="px-4 py-4 text-sm font-medium text-slate-900">${o[0]}</td><td class="px-4 py-4 text-sm text-slate-700">${o[1]}</td></tr>`; });
+        lucide.createIcons();
+    </script>
+</body>
+</html>
