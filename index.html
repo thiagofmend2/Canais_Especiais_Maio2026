@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap' );
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .chart-container { min-height: 350px; }
     </style>
@@ -16,8 +16,11 @@
 <body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
     <header class="bg-white border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-6 py-8">
-            <h1 class="text-4xl font-bold text-slate-900">CANAIS ESPECIAIS - MAIO/2026</h1>
+            <h1 class="text-4xl font-bold text-slate-900 uppercase">CANAIS ESPECIAIS - MAIO/2026</h1>
             <p class="text-slate-500 mt-2">Visão Gerencial</p>
+            <p class="text-slate-600 text-sm mt-4">
+                Panorama de casos recebidos por Canais Especiais no mês de maio/2026.
+            </p>
         </div>
     </header>
     <main class="max-w-7xl mx-auto px-6 py-8">
@@ -77,8 +80,16 @@
         const segmentoData = [{name:"RA",value:79,color:"#1e3a8a"},{name:"PROCON",value:28,color:"#fbbf24"},{name:"Ouvidoria",value:27,color:"#60a5fa"}];
         const historicoMensal = [{mes:"jan/26",total:166,base:134964,percentual:0.12},{mes:"fev/26",total:182,base:144244,percentual:0.13},{mes:"mar/26",total:170,base:151440,percentual:0.11},{mes:"abr/26",total:146,base:156615,percentual:0.09},{mes:"mai/26",total:134,base:162397,percentual:0.08}];
         const historicoIE = [{mes:"jan/26",data:[121,20,14,3,3,0,5]},{mes:"fev/26",data:[136,12,15,7,4,3,5]},{mes:"mar/26",data:[102,24,23,10,6,1,4]},{mes:"abr/26",data:[95,18,9,4,9,0,11]},{mes:"mai/26",data:[80,17,18,8,4,2,5]}];
-        const ieCardsData = [{name:"PUCRS",logo:"https://bucket-vitrine-wl-prod.edtech.com.br/assets-headless/Logo_Icon_0bd832db2a_4f8bfdd079.svg",motivations:"Cobrança e negociação, Acesso e plataforma",stats:{ra:54,ouv:7,pro:19},insight:"Concentração em pontos críticos financeiros"},{name:"FAAP",logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp6eFbWK4LH6au52iHgm_VpLwDTjZKLz0Sg&s",motivations:"Conteúdo das aulas, Plataforma, Retorno de avaliações, Solicitação de certificado",stats:{ra:7,ouv:6,pro:4,pes:6},insight:"Equilíbrio entre demandas acadêmicas e operacionais"},{name:"FIA",logo:"https://www.fiaonline.com.br/hs-fs/hubfs/FIA-Online---Logo-(Branco )-1-1.webp",motivations:"Nome negativado, Cancelamento",stats:{ra:7,ouv:10,pro:1},insight:"Alta concentração em temas financeiros críticos"},{name:"IMPACTA",logo:"https://digital.impacta.com.br/hs-fs/hubfs/FACULDADE-LOGO-DIGITAL-NORMAL.png",motivations:"Cancelamento, Certificação - Solicitação, Certificação - Andamento, Documentação e Treinamento",stats:{ra:5,ouv:3},insight:"Concentração em momentos finais da jornada"},{name:"UNESC",logo:"https://bucket-vitrine-wl-prod.edtech.com.br/assets-headless/logo_49f3ba3e59_1_1_1_5cace08c25.webp",motivations:"Cancelamento, Cobrança indevida",stats:{ra:1,ouv:1},insight:"Volume residual (2 casos ), mas associados a experiência negativa e risco de evasão"},{name:"FSL",logo:"https://digital.faculdadesiriolibanes.org.br/hs-fs/hubfs/logo-sirio-libanes-negativo.png",motivations:"Documentação/Matrícula, Cobrança com juros, Pendências documentais, Falhas no atendimento",stats:{ra:4,ouv:0,pro:1},insight:"Volume reduzido, sem concentração relevante"},{name:"UNINASSAU",logo:"https://vest.uninassau.edu.br/logos/uninassau/dark.svg",motivations:"Cobrança e negociação, Negação indevida",stats:{ra:1,ouv:0,pro:3},insight:"Forte concentração em problemas financeiros críticos"}];
-        const ieTable = document.getElementById('ieTableBody' );
+        const ieCardsData = [
+            { name: "PUCRS", logo: "https://bucket-vitrine-wl-prod.edtech.com.br/assets-headless/Logo_Icon_0bd832db2a_4f8bfdd079.svg", motivations: "Cobrança e negociação, Acesso e plataforma", stats: { ra: 54, ouv: 7, pro: 19 }, insight: "Concentração em pontos críticos financeiros" },
+            { name: "FAAP", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQp6eFbWK4LH6au52iHgm_VpLwDTjZKLz0Sg&s", motivations: "Conteúdo das aulas, Plataforma, Retorno de avaliações, Solicitação de certificado", stats: { ra: 7, ouv: 6, pro: 4, pes: 6 }, insight: "Equilíbrio entre demandas acadêmicas e operacionais" },
+            { name: "FIA", logo: "https://www.fiaonline.com.br/hs-fs/hubfs/FIA-Online---Logo-(Branco)-1-1.webp", motivations: "Nome negativado, Cancelamento", stats: { ra: 7, ouv: 10, pro: 1 }, insight: "Alta concentração em temas financeiros críticos" },
+            { name: "IMPACTA", logo: "https://digital.impacta.com.br/hs-fs/hubfs/FACULDADE-LOGO-DIGITAL-NORMAL.png", motivations: "Cancelamento, Certificação - Solicitação, Certificação - Andamento, Documentação e Treinamento", stats: { ra: 5, ouv: 3 }, insight: "Concentração em momentos finais da jornada" },
+            { name: "UNESC", logo: "https://bucket-vitrine-wl-prod.edtech.com.br/assets-headless/logo_49f3ba3e59_1_1_1_5cace08c25.webp", motivations: "Cancelamento, Cobrança indevida", stats: { ra: 1, ouv: 1 }, insight: "Volume residual (2 casos), mas associados a experiência negativa e risco de evasão" },
+            { name: "FSL", logo: "https://digital.faculdadesiriolibanes.org.br/hs-fs/hubfs/logo-sirio-libanes-negativo.png", motivations: "Documentação/Matrícula, Cobrança com juros, Pendências documentais, Falhas no atendimento", stats: { ra: 4, ouv: 0, pro: 1 }, insight: "Volume reduzido, sem concentração relevante" },
+            { name: "UNINASSAU", logo: "https://vest.uninassau.edu.br/logos/uninassau/dark.svg", motivations: "Cobrança e negociação, Negação indevida", stats: { ra: 1, ouv: 0, pro: 3 }, insight: "Forte concentração em problemas financeiros críticos" }
+        ];
+        const ieTable = document.getElementById('ieTableBody');
         ieData.forEach(item => { ieTable.innerHTML += `<tr class="border-b border-slate-100 hover:bg-slate-50"><td class="px-6 py-3 text-sm text-slate-900">${item.name}</td><td class="px-6 py-3 text-sm text-slate-900 text-right font-medium">${item.value}</td></tr>`; });
         ieTable.innerHTML += `<tr class="bg-blue-50 border-t-2 border-blue-200"><td class="px-6 py-3 text-sm font-bold text-slate-900">CONSOLIDADO</td><td class="px-6 py-3 text-sm font-bold text-slate-900 text-right">134</td></tr>`;
         const segmentoLegend = document.getElementById('segmentoLegend');
